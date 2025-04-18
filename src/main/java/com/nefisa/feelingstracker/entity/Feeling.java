@@ -1,9 +1,7 @@
 package com.nefisa.feelingstracker.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -15,10 +13,19 @@ public class Feeling {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String description;
 
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime dateAdded;
+
+    public Feeling() {
+    }
+
+    public Feeling(String description) {
+        this.description = description;
+    }
 
     public Feeling(String description, LocalDateTime dateAdded) {
         this.description = description;
