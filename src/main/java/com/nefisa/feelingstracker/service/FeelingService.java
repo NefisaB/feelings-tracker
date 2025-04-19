@@ -1,5 +1,6 @@
 package com.nefisa.feelingstracker.service;
 
+import com.nefisa.feelingstracker.dto.FeelingRequestDTO;
 import com.nefisa.feelingstracker.entity.Feeling;
 import com.nefisa.feelingstracker.repositories.FeelingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,24 +29,26 @@ public class FeelingService {
         return feelingRepository.findById(id);
     }
 
-    public Feeling createFeeling(Feeling feeling){
-        feeling.setDateAdded(LocalDateTime.now());
-        return feelingRepository.save(feeling);
+    public Feeling createFeeling(FeelingRequestDTO dto){
+        return feelingRepository.save(mapToEntity(dto));
     }
 
-    public Feeling updateFeeling(Long id, Feeling feeling){
-        if(feelingRepository.existsById(id)){
-            feeling.setId(id);
-            return feelingRepository.save(feeling);
-        }
-        return null;
+    public Feeling updateFeeling(Long id, FeelingRequestDTO dto){
+        return feelingRepository.findById(id).map(existingFeeling ->{
+            existingFeeling.setDescription(dto.getDescription());
+            return feelingRepository.save(existingFeeling);
+        }).orElse(null);
     }
 
-    public boolean deleteFeeling(Long id){
+    public void deleteFeeling(Long id){
         if(feelingRepository.existsById(id)){
             feelingRepository.deleteById(id);
-            return true;
         }
-        return false;
     }
+
+    private Feeling mapToEntity(FeelingRequestDTO dto){
+        return new Feeling(dto.getDescription(), LocalDateTime.now());
+    }
+
+
 }

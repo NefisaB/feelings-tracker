@@ -1,5 +1,6 @@
 package com.nefisa.feelingstracker.controller;
 
+import com.nefisa.feelingstracker.dto.FeelingRequestDTO;
 import com.nefisa.feelingstracker.entity.Feeling;
 import com.nefisa.feelingstracker.service.FeelingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +31,14 @@ public class FeelingController {
 
 
     @PostMapping
-    public Feeling addNewFeeling(@RequestBody Feeling newFeeling){
-        return feelingService.createFeeling(newFeeling);
+    public Feeling addNewFeeling(@RequestBody FeelingRequestDTO feelingRequestDTO){
+        return feelingService.createFeeling(feelingRequestDTO);
     }
 
     @PutMapping("/{id}")
     public Feeling updateFeeling(@PathVariable Long id,
-                                 @RequestBody Feeling updatedFeeling){
-        return feelingService.updateFeeling(id,updatedFeeling);
+                                 @RequestBody FeelingRequestDTO feelingRequestDTO){
+        return feelingService.updateFeeling(id,feelingRequestDTO);
     }
 
     @DeleteMapping("/{id}")
