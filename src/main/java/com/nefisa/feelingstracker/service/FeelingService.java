@@ -2,13 +2,13 @@ package com.nefisa.feelingstracker.service;
 
 import com.nefisa.feelingstracker.dto.FeelingRequestDTO;
 import com.nefisa.feelingstracker.entity.Feeling;
+import com.nefisa.feelingstracker.exception.FeelingNotFoundException;
 import com.nefisa.feelingstracker.repositories.FeelingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class FeelingService {
@@ -25,8 +25,9 @@ public class FeelingService {
         return feelingRepository.findAll();
     }
 
-    public Optional<Feeling> getFeelingById(Long id){
-        return feelingRepository.findById(id);
+    public Feeling getFeelingById(Long id){
+        return feelingRepository.findById(id).orElseThrow(() ->
+                new FeelingNotFoundException("Feeling not found id: " + id));
     }
 
     public Feeling createFeeling(FeelingRequestDTO dto){
@@ -37,12 +38,15 @@ public class FeelingService {
         return feelingRepository.findById(id).map(existingFeeling ->{
             existingFeeling.setDescription(dto.getDescription());
             return feelingRepository.save(existingFeeling);
-        }).orElse(null);
+        }).orElseThrow(() ->
+                new FeelingNotFoundException("Feeling not found id: " + id));
     }
 
     public void deleteFeeling(Long id){
         if(feelingRepository.existsById(id)){
             feelingRepository.deleteById(id);
+        } else {
+            throw new FeelingNotFoundException("Feeling not found id: " + id);
         }
     }
 

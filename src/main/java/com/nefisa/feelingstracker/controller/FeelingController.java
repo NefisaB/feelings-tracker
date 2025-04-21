@@ -3,7 +3,9 @@ package com.nefisa.feelingstracker.controller;
 import com.nefisa.feelingstracker.dto.FeelingRequestDTO;
 import com.nefisa.feelingstracker.entity.Feeling;
 import com.nefisa.feelingstracker.service.FeelingService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,18 +28,19 @@ public class FeelingController {
 
     @GetMapping("/{id}")
     public Feeling getFeelingById(@PathVariable Long id){
-        return feelingService.getFeelingById(id).orElse(null);
+        return feelingService.getFeelingById(id);
     }
 
-
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Feeling addNewFeeling(@RequestBody FeelingRequestDTO feelingRequestDTO){
+    public Feeling addNewFeeling(@Valid @RequestBody FeelingRequestDTO feelingRequestDTO){
         return feelingService.createFeeling(feelingRequestDTO);
     }
 
+
     @PutMapping("/{id}")
     public Feeling updateFeeling(@PathVariable Long id,
-                                 @RequestBody FeelingRequestDTO feelingRequestDTO){
+                                 @Valid @RequestBody FeelingRequestDTO feelingRequestDTO){
         return feelingService.updateFeeling(id,feelingRequestDTO);
     }
 
