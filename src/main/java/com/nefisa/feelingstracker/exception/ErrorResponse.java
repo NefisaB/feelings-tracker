@@ -1,12 +1,12 @@
 package com.nefisa.feelingstracker.exception;
 
-public class FeelingErrorResponse {
+public class ErrorResponse {
 
     private int status;
     private String message;
     private long timeStamp;
 
-    public FeelingErrorResponse(int status, String message, long timeStamp) {
+    public ErrorResponse(int status, String message, long timeStamp) {
         this.status = status;
         this.message = message;
         this.timeStamp = timeStamp;
