@@ -1,5 +1,6 @@
 package com.nefisa.feelingstracker.controller;
 
+import com.nefisa.feelingstracker.request.AuthenticationRequest;
 import com.nefisa.feelingstracker.request.RegisterRequest;
 import com.nefisa.feelingstracker.service.AuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,6 +25,13 @@ public class AuthenticationController {
     @PostMapping("/register")
     public void register(@Valid @RequestBody RegisterRequest registerRequest) throws Exception {
         authenticationService.register(registerRequest);
+    }
+
+    @Operation(summary = "Login user", description = "Submit email and password to authenticate user")
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("/login")
+    public void login(@Valid @RequestBody AuthenticationRequest request) throws Exception {
+        authenticationService.login(request);
     }
 
 
