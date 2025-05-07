@@ -41,4 +41,18 @@ public class UserServiceImpl implements UserService{
                         .map(auth -> (Authority) auth)
                         .toList());
     }
+
+    @Override
+    public void deleteUser() throws AccessDeniedException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if(authentication == null || !authentication.isAuthenticated() ||
+                authentication.getPrincipal().equals("anonymousUser")){
+            throw new AccessDeniedException("Authentication required!");
+        }
+
+        User user = (User) authentication.getPrincipal();
+
+        userRepository.delete(user);
+    }
 }
