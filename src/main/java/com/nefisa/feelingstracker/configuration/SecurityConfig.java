@@ -67,7 +67,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(configurer ->
             configurer
                     .requestMatchers("/api/auth/**","/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**",
-                            "/webjars/**", "/docs").permitAll());
+                            "/webjars/**", "/docs").permitAll()
+                    .anyRequest().authenticated());
 
         return http.build();
     }
