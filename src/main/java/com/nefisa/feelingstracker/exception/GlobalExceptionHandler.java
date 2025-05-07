@@ -36,6 +36,8 @@ public class GlobalExceptionHandler {
                 "Invalid Request",
                 System.currentTimeMillis());
 
+        exc.printStackTrace();
         return new ResponseEntity<>(errorResponse,HttpStatus.BAD_REQUEST);
     }
+
 }

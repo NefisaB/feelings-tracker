@@ -14,11 +14,27 @@ public class AuthenticationRequest {
     @Size(min = 5, max = 30, message = "Password must be between 5 and 30 characters long")
     private String password;
 
+    public AuthenticationRequest() {
+    }
+
+    public AuthenticationRequest(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
     public String getEmail() {
         return email;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

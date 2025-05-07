@@ -43,6 +43,9 @@ public class Feeling {
         this.owner = owner;
     }
 
+    public Feeling(String description, LocalDateTime now) {
+    }
+
     public long getId() {
         return id;
     }

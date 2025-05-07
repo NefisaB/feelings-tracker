@@ -2,6 +2,7 @@ package com.nefisa.feelingstracker.controller;
 
 import com.nefisa.feelingstracker.request.AuthenticationRequest;
 import com.nefisa.feelingstracker.request.RegisterRequest;
+import com.nefisa.feelingstracker.response.AuthenticationResponse;
 import com.nefisa.feelingstracker.service.AuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,8 +31,8 @@ public class AuthenticationController {
     @Operation(summary = "Login user", description = "Submit email and password to authenticate user")
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/login")
-    public void login(@Valid @RequestBody AuthenticationRequest request) throws Exception {
-        authenticationService.login(request);
+    public AuthenticationResponse login(@Valid @RequestBody AuthenticationRequest request) throws Exception {
+        return authenticationService.login(request);
     }
 
 
