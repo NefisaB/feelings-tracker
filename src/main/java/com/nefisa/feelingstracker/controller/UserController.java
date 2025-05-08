@@ -1,9 +1,11 @@
 package com.nefisa.feelingstracker.controller;
 
+import com.nefisa.feelingstracker.request.PasswordUpdateRequest;
 import com.nefisa.feelingstracker.response.UserResponse;
 import com.nefisa.feelingstracker.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,5 +34,12 @@ public class UserController {
     @DeleteMapping
     public void deleteUser() throws AccessDeniedException {
         userService.deleteUser();
+    }
+
+    @Operation(summary = "Update user password", description = "Change password for current user")
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/password")
+    public void updatePassword(@Valid @RequestBody PasswordUpdateRequest passwordUpdateRequest) throws Exception {
+        userService.updatePassword(passwordUpdateRequest);
     }
 }
