@@ -4,8 +4,7 @@ import com.nefisa.feelingstracker.entity.Authority;
 import com.nefisa.feelingstracker.entity.User;
 import com.nefisa.feelingstracker.repositories.UserRepository;
 import com.nefisa.feelingstracker.response.UserResponse;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import com.nefisa.feelingstracker.util.FindAuthenticatedUser;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,23 +14,18 @@ import java.nio.file.AccessDeniedException;
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
+    private final FindAuthenticatedUser findAuthenticatedUser;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, FindAuthenticatedUser findAuthenticatedUser) {
         this.userRepository = userRepository;
+        this.findAuthenticatedUser = findAuthenticatedUser;
     }
 
     @Override
     @Transactional(readOnly = true)
     public UserResponse getUserInfo() throws AccessDeniedException {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if(authentication == null || !authentication.isAuthenticated() ||
-        authentication.getPrincipal().equals("anonymousUser")){
-            throw new AccessDeniedException("Authentication required!");
-        }
-
-        User user = (User) authentication.getPrincipal();
+        User user = findAuthenticatedUser.getAuthenticatedUser();
 
         return new UserResponse(user.getId(),
                 user.getFirstName() + " " + user.getLastName(),
@@ -44,14 +38,8 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void deleteUser() throws AccessDeniedException {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if(authentication == null || !authentication.isAuthenticated() ||
-                authentication.getPrincipal().equals("anonymousUser")){
-            throw new AccessDeniedException("Authentication required!");
-        }
-
-        User user = (User) authentication.getPrincipal();
+        User user = findAuthenticatedUser.getAuthenticatedUser();
 
         userRepository.delete(user);
     }
