@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Table(name = "feelings")
 @Entity
@@ -23,11 +24,11 @@ public class Feeling {
 
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
-    private LocalDateTime dateAdded;
+    private Date dateAdded;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
-    private LocalDateTime dateUpdated;
+    private Date dateUpdated;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id", nullable = false)
@@ -36,10 +37,19 @@ public class Feeling {
     public Feeling() {
     }
 
-    public Feeling(String title, String description, LocalDateTime dateAdded, User owner) {
+    public Feeling(String title, String description, Date dateAdded, User owner) {
         this.title = title;
         this.description = description;
         this.dateAdded = dateAdded;
+        this.owner = owner;
+    }
+
+    public Feeling(long id, String title, String description, Date dateAdded, Date dateUpdated, User owner) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.dateAdded = dateAdded;
+        this.dateUpdated = dateUpdated;
         this.owner = owner;
     }
 
@@ -70,19 +80,19 @@ public class Feeling {
         this.description = description;
     }
 
-    public LocalDateTime getDateAdded() {
+    public Date getDateAdded() {
         return dateAdded;
     }
 
-    public void setDateAdded(LocalDateTime dateAdded) {
+    public void setDateAdded(Date dateAdded) {
         this.dateAdded = dateAdded;
     }
 
-    public LocalDateTime getDateUpdated() {
+    public Date getDateUpdated() {
         return dateUpdated;
     }
 
-    public void setDateUpdated(LocalDateTime dateUpdated) {
+    public void setDateUpdated(Date dateUpdated) {
         this.dateUpdated = dateUpdated;
     }
 
