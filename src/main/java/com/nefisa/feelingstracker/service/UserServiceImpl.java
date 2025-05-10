@@ -2,7 +2,7 @@ package com.nefisa.feelingstracker.service;
 
 import com.nefisa.feelingstracker.entity.Authority;
 import com.nefisa.feelingstracker.entity.User;
-import com.nefisa.feelingstracker.repositories.UserRepository;
+import com.nefisa.feelingstracker.repository.UserRepository;
 import com.nefisa.feelingstracker.request.PasswordUpdateRequest;
 import com.nefisa.feelingstracker.response.UserResponse;
 import com.nefisa.feelingstracker.util.FindAuthenticatedUser;

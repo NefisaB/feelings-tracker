@@ -1,6 +1,6 @@
 package com.nefisa.feelingstracker.configuration;
 
-import com.nefisa.feelingstracker.repositories.UserRepository;
+import com.nefisa.feelingstracker.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;

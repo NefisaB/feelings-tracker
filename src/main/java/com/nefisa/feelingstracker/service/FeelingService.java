@@ -3,7 +3,7 @@ package com.nefisa.feelingstracker.service;
 import com.nefisa.feelingstracker.dto.FeelingRequestDTO;
 import com.nefisa.feelingstracker.entity.Feeling;
 import com.nefisa.feelingstracker.exception.FeelingNotFoundException;
-import com.nefisa.feelingstracker.repositories.FeelingRepository;
+import com.nefisa.feelingstracker.repository.FeelingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

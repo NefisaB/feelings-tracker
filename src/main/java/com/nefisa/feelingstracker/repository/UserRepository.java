@@ -1,4 +1,4 @@
-package com.nefisa.feelingstracker.repositories;
+package com.nefisa.feelingstracker.repository;
 
 import com.nefisa.feelingstracker.entity.User;
 import org.springframework.data.repository.CrudRepository;

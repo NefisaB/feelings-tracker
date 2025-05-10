@@ -2,7 +2,7 @@ package com.nefisa.feelingstracker.service;
 
 import com.nefisa.feelingstracker.entity.Authority;
 import com.nefisa.feelingstracker.entity.User;
-import com.nefisa.feelingstracker.repositories.UserRepository;
+import com.nefisa.feelingstracker.repository.UserRepository;
 import com.nefisa.feelingstracker.request.AuthenticationRequest;
 import com.nefisa.feelingstracker.request.RegisterRequest;
 import com.nefisa.feelingstracker.response.AuthenticationResponse;
