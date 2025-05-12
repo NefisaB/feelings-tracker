@@ -2,6 +2,7 @@ package com.nefisa.feelingstracker.service;
 
 import com.nefisa.feelingstracker.entity.Feeling;
 import com.nefisa.feelingstracker.entity.User;
+import com.nefisa.feelingstracker.exception.FeelingNotFoundException;
 import com.nefisa.feelingstracker.repository.FeelingRepository;
 import com.nefisa.feelingstracker.request.FeelingRequest;
 import com.nefisa.feelingstracker.response.FeelingResponse;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.nio.file.AccessDeniedException;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FeelingServiceImpl implements FeelingService{
@@ -53,6 +55,20 @@ public class FeelingServiceImpl implements FeelingService{
                 .stream()
                 .map(this::convertToFeelingResponse)
                 .toList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public FeelingResponse getFeelingByIdAndOwner(long id) throws AccessDeniedException {
+        User user = findAuthenticatedUser.getAuthenticatedUser();
+
+        Optional<Feeling> feeling = feelingRepository.findByIdAndOwner(id, user);
+        if(feeling.isEmpty()){
+            throw new FeelingNotFoundException("Feeling not found.");
+        }
+
+        return convertToFeelingResponse(feeling.get());
+
     }
 
     private FeelingResponse convertToFeelingResponse(Feeling feeling) {
