@@ -71,6 +71,19 @@ public class FeelingServiceImpl implements FeelingService{
 
     }
 
+    @Override
+    @Transactional
+    public void deleteFeeling(long id) throws AccessDeniedException {
+        User user = findAuthenticatedUser.getAuthenticatedUser();
+
+        Optional<Feeling> feeling = feelingRepository.findByIdAndOwner(id, user);
+        if(feeling.isEmpty()){
+            throw new FeelingNotFoundException("Feeling not found.");
+        }
+
+        feelingRepository.delete(feeling.get());
+    }
+
     private FeelingResponse convertToFeelingResponse(Feeling feeling) {
         return new FeelingResponse(feeling.getId(),
                 feeling.getTitle(),

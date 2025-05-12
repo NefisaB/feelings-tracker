@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService{
         }
 
         // check if new password is same as current password
-        if(isSamePassword(user.getPassword(), request.getNewPassword1())){
+        if(isSamePassword(request.getOldPassword(), request.getNewPassword1())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "New password must be different from old password");
         }
 
@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService{
     }
 
     private boolean isOldPasswordCorrect(String currentPassword, String oldPassword){
-        return passwordEncoder.matches(currentPassword, oldPassword);
+        return passwordEncoder.matches(oldPassword, currentPassword);
     }
 
     private boolean isSamePassword(String password1, String password2){

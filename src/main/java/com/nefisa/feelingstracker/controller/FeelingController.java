@@ -40,11 +40,18 @@ public class FeelingController {
         return feelingService.getAllFeelings();
     }
 
-    @Operation(summary = "Get single feeling", description = "Get feeling based on id for current user")
+    @Operation(summary = "Get single feeling", description = "Get feeling based on id for registered user")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
     public FeelingResponse getFeelingById(@PathVariable @Min(1) long id) throws AccessDeniedException {
         return feelingService.getFeelingByIdAndOwner(id);
+    }
+
+    @Operation(summary = "Delete single feeling", description = "Delete feeling based on id for registered user")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{id}")
+    public void deleteFeeling(@PathVariable @Min(1) long id) throws AccessDeniedException {
+        feelingService.deleteFeeling(id);
     }
 
 

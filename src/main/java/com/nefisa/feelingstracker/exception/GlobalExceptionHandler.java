@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.server.ResponseStatusException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -28,6 +29,17 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse,HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<ErrorResponse> handleResponseStatusException(ResponseStatusException exc){
+        ErrorResponse errorResponse = new ErrorResponse(
+                exc.getStatusCode().value(),
+                exc.getMessage(),
+                System.currentTimeMillis());
+
+        return new ResponseEntity<>(errorResponse,exc.getStatusCode());
+    }
+
+
 
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handleGenericException(Exception exc){
@@ -36,7 +48,6 @@ public class GlobalExceptionHandler {
                 "Invalid Request",
                 System.currentTimeMillis());
 
-        exc.printStackTrace();
         return new ResponseEntity<>(errorResponse,HttpStatus.BAD_REQUEST);
     }
 

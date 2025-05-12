@@ -11,7 +11,5 @@ public interface FeelingService {
     FeelingResponse createFeeling(FeelingRequest request) throws AccessDeniedException;
     List<FeelingResponse> getAllFeelings() throws AccessDeniedException;
     FeelingResponse getFeelingByIdAndOwner(long id) throws AccessDeniedException;
-//
-//    Feeling updateFeeling(long id, FeelingRequest request);
-//    void deleteFeeling(long id);
+    void deleteFeeling(long id) throws AccessDeniedException;
 }
