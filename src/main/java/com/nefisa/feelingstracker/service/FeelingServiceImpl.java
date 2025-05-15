@@ -84,6 +84,25 @@ public class FeelingServiceImpl implements FeelingService{
         feelingRepository.delete(feeling.get());
     }
 
+    @Override
+    @Transactional
+    public FeelingResponse updateFeeling(FeelingRequest request, long id) throws AccessDeniedException {
+        User user = findAuthenticatedUser.getAuthenticatedUser();
+
+        Optional<Feeling> feeling = feelingRepository.findByIdAndOwner(id, user);
+        if(feeling.isEmpty()){
+            throw new FeelingNotFoundException("Feeling not found");
+        }
+
+        Feeling updatedFeeling = feeling.get();
+        updatedFeeling.setTitle(request.getTitle());
+        updatedFeeling.setDescription(request.getDescription());
+        updatedFeeling.setDateUpdated(new Date(System.currentTimeMillis()));
+
+        feelingRepository.save(updatedFeeling);
+        return  convertToFeelingResponse(updatedFeeling);
+    }
+
     private FeelingResponse convertToFeelingResponse(Feeling feeling) {
         return new FeelingResponse(feeling.getId(),
                 feeling.getTitle(),
@@ -91,6 +110,4 @@ public class FeelingServiceImpl implements FeelingService{
                 feeling.getDateAdded(),
                 feeling.getDateUpdated());
     }
-
-
 }
