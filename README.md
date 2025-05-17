@@ -2,6 +2,8 @@
 
 A Spring Boot 3 + MySQL REST API for tracking user feelings, secured with JWT and role-based access (User/Admin).
 
+This project is based on the Spring Boot REST APIs: Building Modern APIs with Spring Boot Course by Chad Darby & Eric Roby on Udemy.
+
 ## 🚀 Features
 
 ### ✅ Authentication & Authorization
