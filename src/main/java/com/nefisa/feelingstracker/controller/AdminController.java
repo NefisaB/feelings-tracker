@@ -23,7 +23,7 @@ public class AdminController {
 
     @Operation(summary = "Get all users", description = "Retrieve all users from database")
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping
+    @GetMapping("/users")
     public List<UserResponse> getAllUsers(){
         return adminService.getAllUsers();
     }
